@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <meta name="keywords" content="comandă burgeri online, livrare rapidă fast food, fast food la domiciliu, comenzi non-stop, fast food, restaurant fast food, mâncare rapidă, livrare fast food, comandă online fast food, meniu fast food, mâncare la pachet, oferte fast food"><!--cuvintele cheie ale paginii; majoritatea motoarelor de căutare ignoră keywords -->
+        <meta name="description" content="Restaurant fast food online. Mâncare proaspătă."><!-- descrierea paginii, adesea apare sub link când sunt afișate rezultatele căutării -->
+        <%- include("../fragmente/head.ejs")%>
+    </head>
+    <body>
+        <%- include("../fragmente/header.ejs")%>
+        <main>
+            <div id="grid-acasa">
+                <div id="welcome" class="gridspace">
+                    <h2 class="chewy-regular">Bine ati venit la Golden Bites!</h2>
+                    <%- locals.ip %>
+                    <div>
+                        <p id="descriere">Descoperă gustul autentic și savoarea inegalabilă la Golden Bites! Indiferent dacă îți dorești un <b>burger suculent</b>, o porție crocantă de <b>aripi de pui</b> sau un <b>desert</b> care să-ți topească inima, la noi fiecare îmbucătură este o aventură culinară. <b>Produsele noastre proaspete</b> și preparate cu pasiune sunt perfecte pentru a-ți satisface <b>pofta</b> și a face pe alții să-ți urmeze exemplul. Așa că, dacă vrei să transformi o masă obișnuită într-o experiență memorabilă, Golden Bites este alegerea perfectă pentru tine și pentru cei dragi ție. Hai să facem poftă împreună! </p>
+                    </div>
+                </div>
+
+                <div id="bestseller" class="gridspace">
+                    <h2 class="titlurisectiuni">Cele mai vandute produse</h2>
+                    <table>
+                        <caption>Top Cele Mai Vandute Produse la Golden Bites</caption>
+                        <thead>
+                            <tr>
+                                <th>Produs</th>
+                                <th>Vanzari lunare</th>
+                                <th>Pret final</th>
+                                <th>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Burger Crispy</td>
+                                <td>1200</td>
+                                <td>24.99</td>
+                                <td>⭐️⭐️⭐️⭐️⭐️</td>
+                            </tr>
+                            <tr>
+                                <td>Dublu Cheeseburger</td>
+                                <td>950</td>
+                                <td>22.50</td>
+                                <td>⭐️⭐️⭐️⭐️</td>
+                            </tr>
+                            <tr>
+                                <td>Cheesy Fries</td>
+                                <td>1100</td>
+                                <td>10.99</td>
+                                <td>⭐️⭐️⭐️⭐️⭐️</td>
+                            </tr>
+                            <tr>
+                                <td>Loaded Fries</td>
+                                <td>870</td>
+                                <td>12.50</td>
+                                <td>⭐️⭐️⭐️⭐️</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">Datele sunt actualizate lunar</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mrow>
+                            <msub>
+                                <mi id="mathPfinal">P</mi>
+                                <mi id="mathfinal">final</mi>
+                            </msub>
+                            <mo>=</mo>
+                            <msub>
+                                <mi id="mathPtotal">P</mi>
+                                <mi id="mathtotal">total</mi>
+                            </msub>
+                            <mo>&times;</mo>
+                            <mrow>
+                                <mo>(</mo>
+                                <mn>1</mn>
+                                <mo>-</mo>
+                                <mi class="discount">d</mi>
+                                <mo>)</mo>
+                            </mrow>
+                        </mrow>
+                    </math>
+                    <p>unde <i class="discount">d</i> reprezinta discountul</p>                    
+                </div>
+                <div id="promovare" class="gridspace">
+                    <h2 class="titlurisectiuni">Advertisment</h2>
+                    <div id="container-iframe">
+                        <div id="taburi-iframe">
+                            <a href="https://www.youtube.com/embed/cz7_4SV6MH4?si=JKM_tp05SZ_0MiMA" target="videoIframe"><span>Vizualizare<br>Meniu</span></a>
+                            <a href="https://www.youtube.com/embed/V5w1OGknhlc?si=TRnXRo1aw8_VMJgs" target="videoIframe"><span>Mod de<br>Preparare</span></a>
+                        </div>
+                        <iframe name="videoIframe" width="560" height="315" src="https://www.youtube.com/embed/cz7_4SV6MH4?si=JKM_tp05SZ_0MiMA" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <p>Aici ai un link catre canalul nostru de <a class="linkfrumos" href="https://www.youtube.com/@PewDiePie">youtube</a>.</p>
+                    <h2 class="titlurisectiuni">Galerie</h2>
+                    <div id="grid-galerie">
+                        <% 
+                            const vect_anotimp = ["iarna", "primavara", "vara", "toamna"];
+                            const d = new Date();
+                            const luna = d.getMonth(); 
+                    
+                            let anotimp_curent;
+                            if (luna >= 2 && luna <= 4) {
+                                anotimp_curent = "primavara";
+                            } else if (luna >= 5 && luna <= 7) {
+                                anotimp_curent = "vara";
+                            } else if (luna >= 8 && luna <= 10) {
+                                anotimp_curent = "toamna";
+                            } else {
+                                anotimp_curent = "iarna";
+                            }
+                    
+                            let imaginiFiltrate = locals.imagini.filter(imag => 
+                                imag.anotimp && imag.anotimp.includes(anotimp_curent)
+                            ).slice(0, 10);
+                    
+                            for (let index = 0; index < imaginiFiltrate.length; index++) { 
+                                if (index === 4 || index === 10) { %>
+                                    <div class="empty"></div>
+                                <% } %>
+                    
+                                <% let imag = imaginiFiltrate[index]; %>
+                                <figure>
+                                    <picture> 
+                                        <source srcset="<%- imag.fisier_mic %>" media="(max-width:768px)" />
+                                        <source srcset="<%- imag.fisier_mediu %>" media="(max-width:1024px)" />
+                                        <img src="<%- imag.cale_fisier %>" alt="mancare">
+                                    </picture>
+                                    <figcaption><%- imag.titlu %></figcaption>
+                                </figure>
+                            <% } %>
+                    </div>
+                    
+                      
+                </div>
+
+                <div id="FAQ" class="gridspace">
+                    <h2 class="titlurisectiuni">FAQ</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi nulla ducimus odio pariatur sequi sapiente blanditiis? Soluta porro voluptatibus impedit praesentium sunt doloribus autem fugiat, eligendi iusto velit, quae sint.</p>
+                </div>
+
+                <div id="angajari" class="gridspace">
+                    <h2 class="titlurisectiuni">Vrei sa ni te alaturi? Ai toate informatiile necesare in acest <a class="linkfrumos" href="./resurse/fisiere/angajare.pdf" download="De ce sa te angajezi la Golden Bites.pdf">document</a>.</h2>
+                    <embed src="./resurse/fisiere/angajare.pdf" type="application/pdf">
+                </div>
+
+                <div id="locatie" class="gridspace">
+                    <h2 class="titlurisectiuni">Aici ne puteti gasi!</h2>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.884301139307!2d26.097011776949405!3d44.43553547107595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff472f47f047%3A0x493984726f0235f9!2sFaculty%20of%20Mathematics%20and%20Computer%20Science!5e0!3m2!1sen!2sro!4v1740932748696!5m2!1sen!2sro"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+                <div id="despre-noi" class="gridspace">
+                    <h2 class="titlurisectiuni">Despre noi</h2>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa hic amet, ipsum tempora repellat itaque! Dolore, in. Veniam, ipsum. Sequi quam ipsum, quasi quisquam labore cum dolor accusantium rerum ad.</p>
+                </div>
+
+                <div id="feedback" class="gridspace">
+                    <h2 class="titlurisectiuni">Lasa-ne un mesaj! <i class="fa-regular fa-face-smile fa-bounce"></i></h2> 
+                    <p>Daca doresti sa ne dai un feedback, il ascultam cu placere!</p>
+                </div>
+
+                <div id="produse"> 
+                    <h2 class="titlurisectiuni">Produse proaspete</h2>
+                    <p>Aruncati o privire la meniul nostru! Puteti apasa pe elementele din imagine pentru a naviga meniul!</p>
+                    <img src="./resurse/imagini/map/mapimage.png" usemap="#mapimage" width="200" height="200" alt="[Map image]">
+                    <map name="mapimage">
+                        <area shape="rect" coords="30,30,90,130" href="#bauturi" alt="dreptunghi">
+                        <area shape="circle" coords="60,155,40" href="#garnituri" alt="cerc">
+                        <area shape="circle" coords="130,130,50" href="#pui" alt="cerc">
+                    </map>
+                    <section id="pui">
+                        <h3 class="titlurisectiuni">Produse din pui</h3>
+                        <div class="produs">
+                            <figure>
+                                <img src="./resurse/imagini/produse/pui/burgercrispy400.png" alt="[burgercrispy]" srcset="./resurse/imagini/produse/pui/burgercrispy400.png 400w, ./resurse/imagini/produse/pui/burgercrispy200.png 200w, ./resurse/imagini/produse/pui/burgercrispy100.png 100w" sizes="(min-width:1200px) 400px, (min-width:800px) 200px,  100px">
+                                <figcaption>Burger Crispy</figcaption>
+                            </figure>
+                            <p>Pret: 23.00 Lei</p>
+                            <details>
+                                <summary>Detalii produs:</summary>
+                                <p><i>634 kcal, crispy de pui, condimente, castraveti murati, varza tocata, sos golden</i></p>
+                            </details>
+                        </div>
+                    </section>
+                    <section id="vita">
+                        <h3 class="titlurisectiuni">Produse din vita</h3>
+                        <div class="produs">
+                            <figure>
+                                <img src="./resurse/imagini/produse/vita/dublucheeseburger400.png" alt="[dublucheeseburger]" srcset="./resurse/imagini/produse/vita/dublucheeseburger400.png 400w, ./resurse/imagini/produse/vita/dublucheeseburger200.png 200w, ./resurse/imagini/produse/vita/dublucheeseburger100.png 100w" sizes="(min-width:1200px) 400px, (min-width:800px) 200px,  100px">
+                                <figcaption>Dublu Cheeseburger</figcaption>
+                            </figure>
+                            <p>Pret: <s>28.00 Lei</s><ins><b>23.99 Lei</b></ins></p>
+                            <details>
+                                <summary>Detalii produs:</summary>
+                                <p><i>712 kcal, 2x carne de vita, salata iceberg, chifle unse cu unt, 2x cheddar, sos golden</i></p>
+                            </details>
+                        </div>
+                    </section>
+                    <section id="garnituri">
+                        <h3 class="titlurisectiuni">Garnituri</h3>
+                        <p>Place-holder text</p>
+                    </section>
+                    <section id="deserturi">
+                        <h3 class="titlurisectiuni">Deserturi</h3>
+                        <p>Place-holder text</p>
+                    </section>
+                <section id="meniuri"> 
+                    <h2 class="titlurisectiuni">Meniuri</h2>
+                    <p>Aici vor aparea meniurile!</p>
+                    <p>Momentan nu exista :P</p>
+                    <section id="standard">
+                        <h3 class="titlurisectiuni">Meniuri standard</h3>
+                        <p>Place-holder text</p>
+                    </section>
+                    <section id="speciale">
+                        <h3 class="titlurisectiuni">Oferte speciale</h3>
+                        <p>Place-holder text</p>
+                    </section>
+                </section>
+                <section id="bauturi"> 
+                    <h2 class="titlurisectiuni">Bauturi</h2>
+                    <p>Aici vor aparea bauturile!</p>
+                    <p>Momentan nu exista :P</p>
+                    <section id="racoritoare">
+                        <h3 class="titlurisectiuni">Racoritoare</h3>
+                        <p>Place-holder text</p>
+                    </section>
+                    <section id="cafea">
+                        <h3 class="titlurisectiuni">Cafea</h3>
+                        <p>Place-holder text</p>
+                    </section>
+                    <section id="shakeuri">
+                        <h3 class="titlurisectiuni">Shakeuri</h3>
+                        <p>Place-holder text</p>
+                    </section>
+                </section>
+                </div>
+            </div>
+        </main>
+        <%- include("../fragmente/footer.ejs")%>
+    </body>
+</html>

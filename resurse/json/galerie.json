@@ -1,0 +1,55 @@
+{
+	"cale_galerie":"resurse/imagini/galerie",
+	"imagini": [
+		{
+			"cale_fisier":"burger.png",
+			"titlu":"Burger",
+			"text_descriere": "Un burger suculent!",
+			"anotimp":["iarna","primavara","vara","toamna"]
+		},
+		{
+			"cale_fisier":"crispy_menu.png",
+			"titlu":"Meniu Crispy",
+			"text_descriere": "Un meniu de nota 10!",
+			"anotimp":["iarna","primavara","vara","toamna"]
+			
+		},
+		{
+			"cale_fisier":"crispy_salad.png",
+			"titlu":"Salata Crispy",
+			"text_descriere": "Bun pentru orice dieta!",
+			"anotimp":["iarna","primavara","vara","toamna"]
+		},
+		{
+			"cale_fisier":"fries.png",
+			"titlu":"Cartofi",
+			"text_descriere": "O garnitura buna in orice combinatie!",
+			"anotimp":["iarna","primavara","vara","toamna"]
+		},
+		{
+			"cale_fisier":"hamburger.png",
+			"titlu":"Hamburger",
+			"text_descriere": "Un burger clasic!",
+			"anotimp":["iarna","primavara","vara","toamna"]
+		},
+		{
+			"cale_fisier":"sandwich.png",
+			"titlu":"Sandwich",
+			"text_descriere": "Un sandwich pentru cei infometati!",
+			"anotimp":["iarna","primavara","vara","toamna"]
+		},
+		{
+			"cale_fisier":"veggie.png",
+			"titlu":"Veggie Burger",
+			"text_descriere": "Un burger sanatos!",
+			"anotimp":["iarna","primavara","vara","toamna"]
+		},
+		{
+			"cale_fisier":"wrap_menu.png",
+			"titlu":"Meniu Wrap",
+			"text_descriere": "Un meniu copios!",
+			"anotimp":["iarna","primavara","vara","toamna"]
+		}
+		
+	]
+}

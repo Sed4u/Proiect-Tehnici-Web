@@ -1,0 +1,21 @@
+WEBVTT - english subtitle for freddy fazbear
+
+STYLE
+::cue {
+  color: #232e2f;
+  background-color:#DEBF62;
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+00:00.000 --> 00:04.000 line:100 align: middle
+<c>This is <u>Tom</u> vibing to an ancient chinese song<\c>
+
+00:05.000 --> 00:08.000 align:right line:0 
+<c>Isn't he cool?</c>
+
+00:11.000 --> 00:15.000 align:middle line:100
+<c>He is going to spin until the video stops! Have fun watching him!</c>
+

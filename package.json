@@ -1,0 +1,26 @@
+{
+  "name": "site",
+  "version": "1.0.0",
+  "description": "Restaurantul Golden Bites",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fast",
+    "food",
+    "burgers",
+    "french",
+    "fries",
+    "drinks"
+  ],
+  "author": "Oltean Dragos-Mihai",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.10",
+    "sharp": "^0.34.1"
+  }
+}

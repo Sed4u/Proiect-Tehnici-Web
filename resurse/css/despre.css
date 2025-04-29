@@ -1,0 +1,21 @@
+video{
+    display: block;
+    justify-content: center;
+    justify-self: center;
+    margin-top: 100px;
+    border-radius: 10px;
+    width: 85%;
+    min-width: 200px;
+    max-width: 600px;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+main{
+    height: 100vh;
+}

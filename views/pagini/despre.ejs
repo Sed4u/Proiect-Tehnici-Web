@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+        <%- include("../fragmente/head.ejs") %>
+        <link rel="stylesheet" type="text/css" href="/resurse/css/despre.css">
+    </head>
+    <body>
+    <%- include("../fragmente/header.ejs") %> 
+    <main>
+        <h1 class="titlurisectiuni">Aici se vor afla detalii despre restaurantul Golden Bites!</h1>
+        <video controls preload="metadata" style="width:80%;height:auto" poster="../resurse/imagini/poster/poster.jpeg">
+            <!--SOURCES-->
+            <source src="../resurse/video/spinning_tom.mp4" type="video/mp4">
+            <source src="../resurse/video/spinning_tom.ogv" type="video/ogv">
+            <!--TRACKS-->
+            <track  default src="resurse/tracks/captions_ro.vtt" kind="captions" srclang="ro" label="romană" />
+            <track src="resurse/tracks/captions_en.vtt" kind="captions" srclang="en" label="engleză" />
+    </video>
+    </main>
+    <%- include("../fragmente/footer.ejs") %>
+
+    </body>
+</html>
