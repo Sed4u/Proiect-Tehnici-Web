@@ -11,6 +11,7 @@
             <div id="grid-acasa">
                 <div id="welcome" class="gridspace">
                     <h2 class="chewy-regular">Bine ati venit la Golden Bites!</h2>
+                    <div class="stilizare-hr"></div>
                     <%- locals.ip %>
                     <div>
                         <p id="descriere">Descoperă gustul autentic și savoarea inegalabilă la Golden Bites! Indiferent dacă îți dorești un <b>burger suculent</b>, o porție crocantă de <b>aripi de pui</b> sau un <b>desert</b> care să-ți topească inima, la noi fiecare îmbucătură este o aventură culinară. <b>Produsele noastre proaspete</b> și preparate cu pasiune sunt perfecte pentru a-ți satisface <b>pofta</b> și a face pe alții să-ți urmeze exemplul. Așa că, dacă vrei să transformi o masă obișnuită într-o experiență memorabilă, Golden Bites este alegerea perfectă pentru tine și pentru cei dragi ție. Hai să facem poftă împreună! </p>
@@ -94,7 +95,10 @@
                         <iframe name="videoIframe" width="560" height="315" src="https://www.youtube.com/embed/cz7_4SV6MH4?si=JKM_tp05SZ_0MiMA" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                     <p>Aici ai un link catre canalul nostru de <a class="linkfrumos" href="https://www.youtube.com/@PewDiePie">youtube</a>.</p>
-                    <h2 class="titlurisectiuni">Galerie</h2>
+                    <div class="container-text-reflectat">
+                        <h2 id="text">Galerie</h2>
+                        <h2 id="text-reflectat">Galerie</h2>
+                      </div>
                     <div id="grid-galerie">
                         <% 
                             const vect_anotimp = ["iarna", "primavara", "vara", "toamna"];
@@ -132,8 +136,6 @@
                                 </figure>
                             <% } %>
                     </div>
-                    
-                      
                 </div>
 
                 <div id="FAQ" class="gridspace">
