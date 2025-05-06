@@ -118,18 +118,25 @@
         transition: font-size 0.3s ease-in-out;
     }
 
+    .titlusite{
+        font-size: 2rem;
+        color: var(--culoare-principala);
+        text-shadow: 1px 1px var(--culoare-hover);
+    }
+
     /* mediu */
-    @media (max-width: 1024px) {
+    @media (max-width: 1100px) {
         html {
             font-size: 15px;
         }
     }
 
     /* mic */
-    @media (max-width: 768px) {
+    @media (max-width: 800px) {
         html {
             font-size: 14px;
         }
+       
     }
 
 
@@ -141,6 +148,7 @@
         --culoare-secundara: #232e2f;
         --culoare-footer: #141c1c;
         --negru: #000000;
+        overflow-x: hidden;
     }
 
     #grid-acasa {
@@ -160,10 +168,22 @@
     }
 
     /* mediu */
-    @media (max-width: 1024px) {
+    @media (max-width: 1100px) {
         #grid-acasa {
             gap: 15px;
             padding: 20px;
+            display: grid;
+            grid-template-areas:
+                "welcome"
+                "bestseller"
+                "promovare"
+                "FAQ"
+                "angajari"
+                "locatie"
+                "despre-noi"
+                "feedback"
+                "produse";
+            grid-template-columns: 1fr;
         }
 
         #grid-acasa>* {
@@ -172,10 +192,22 @@
     }
 
     /* mic */
-    @media (max-width: 768px) {
+    @media (max-width: 800px) {
         #grid-acasa {
             gap: 10px;
             padding: 10px;
+            display: grid;
+            grid-template-areas:
+                "welcome"
+                "bestseller"
+                "promovare"
+                "FAQ"
+                "angajari"
+                "locatie"
+                "despre-noi"
+                "feedback"
+                "produse";
+            grid-template-columns: 1fr;
         }
 
         #grid-acasa>* {
@@ -341,12 +373,21 @@
 
     header {
         display: flex;
-        justify-content: flex-start;
+        flex-direction: column;
+        align-items: center;
         background-color: var(--culoare-secundara);
         width: 100%;
     }
 
     /* HEADER */
+
+    .header-top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
     .banner {
         display: none;
     }
@@ -386,7 +427,7 @@
         cursor: pointer;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1100px) {
         #iconcasa {
             display: inline;
         }
@@ -396,7 +437,7 @@
         }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 800px) {
 
         #butonacasa {
             display: none;
@@ -416,15 +457,17 @@
 
         #burgermenunavbar {
             position: relative;
+            
           }
           
           #burger-toggle:checked ~ .navbar ul {
             display: flex;
+            width: 100%;
             flex-direction: column;
             position: absolute;
             margin-top: -26px;
+            margin-left: -385px;
             top: 100%;
-            left: 0;
             background-color: var(--culoare-principala);
             z-index: 1000;
             animation-name: animatie_submeniu;
@@ -436,6 +479,7 @@
 
         nav ul .buton-meniu:hover ul {
             display: block;
+            width: 100%;
         }
 
         @keyframes animatie_submeniu {
@@ -444,7 +488,7 @@
             }
 
             100% {
-                clip-path: circle(400% at 0 0);
+                clip-path: circle(1000% at 0 0);
             }
         }
 
@@ -538,14 +582,14 @@
         font-weight: normal;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 800px) {
         .items {
             display: none;
             z-index: 999;
         }
 
         .navbar li {
-            width: 150px;
+            width: 800px;
             text-align: center;
             margin: 0px;
             border: 0px;
@@ -553,14 +597,14 @@
         }
 
         .butoaneprincipale {
-            width: 150px;
+            width: 800px;
             padding: 5px 0px 5px 0px;
             margin: 0;
             text-align: center;
         }
 
         .butoaneprincipale ol {
-            width: 150px;
+            width: 800px;
         }
     }
 
@@ -772,9 +816,11 @@
 
         img:not(.banner),
         video,
+        figure,
         iframe,
         .produseindividuale,
         #link-top,
+        #taburi-iframe,
         #burgermenunavbar {
             display: none;
         }
@@ -946,7 +992,7 @@ main .linkfrumos:active {
     background: white;
   } 
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1100px) {
     #grid-galerie {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -955,7 +1001,7 @@ main .linkfrumos:active {
       }
   }
 
-@media (max-width:764px){
+@media (max-width:800px){
     #grid-galerie {
         display:block;
     }
@@ -1025,5 +1071,16 @@ main .linkfrumos:active {
 }
   
   
-  
-  
+@media (max-width: 800px) {
+    main{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 1100px) {
+    main{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
