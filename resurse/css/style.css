@@ -140,17 +140,6 @@
     }
 
 
-    body {
-        --culoare-principala: #DEBF62;
-        --culoare-hover: #B3963A;
-        --alb: #FFFFFF;
-        --culoare-borders: #917004;
-        --culoare-secundara: #232e2f;
-        --culoare-footer: #141c1c;
-        --negru: #000000;
-        overflow-x: hidden;
-    }
-
     #grid-acasa {
         display: grid;
         grid-template-areas: "welcome    welcome    welcome    welcome    welcome"
@@ -217,7 +206,7 @@
 
     .gridspace {
         border-radius: 10px;
-        background-color: var(--alb);
+        background-color: var(--culoare-divuri);
         box-shadow: 2px 2px var(--negru);
     }
 
@@ -371,243 +360,6 @@
     }
 
 
-    header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: var(--culoare-secundara);
-        width: 100%;
-    }
-
-    /* HEADER */
-
-    .header-top {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .banner {
-        display: none;
-    }
-
-    header>h1 {
-        color: var(--culoare-principala);
-        align-content: center;
-        padding-left: 30px;
-        padding-right: 20px;
-        font-size: 2.2rem;
-        text-shadow: 1.2px 1.2px 1.2px var(--culoare-borders);
-    }
-
-    /* ECRANE MAI MICI + ICON NAVBAR */
-    #iconcasa {
-        display: none;
-    }
-
-    #butonacasa {
-        display: inline;
-    }
-
-    #burger-toggle {
-        display: none;
-    }
-
-    #burgermenu {
-        display: none;
-        width: max-content;
-        background-color: var(--culoare-principala);
-        list-style: none;
-        font-weight: bold;
-        position: relative;
-        padding: 10px;
-        gap: 0;
-        margin: -2px;
-        cursor: pointer;
-    }
-
-    @media (max-width: 1100px) {
-        #iconcasa {
-            display: inline;
-        }
-
-        #butonacasa {
-            display: none;
-        }
-    }
-
-    @media (max-width: 800px) {
-
-        #butonacasa {
-            display: none;
-        }
-
-        .butoaneprincipale {
-            display: none;
-        }
-
-        .navbar ul {
-            display: none;
-        }
-
-        #burgermenu {
-            display: inline-block;
-        }
-
-        #burgermenunavbar {
-            position: relative;
-            
-          }
-          
-          #burger-toggle:checked ~ .navbar ul {
-            display: flex;
-            width: 100%;
-            flex-direction: column;
-            position: absolute;
-            margin-top: -26px;
-            margin-left: -385px;
-            top: 100%;
-            background-color: var(--culoare-principala);
-            z-index: 1000;
-            animation-name: animatie_submeniu;
-            animation-duration: 2s;
-            animation-timing-function: linear;
-            animation-fill-mode: forwards;
-          }
-          
-
-        nav ul .buton-meniu:hover ul {
-            display: block;
-            width: 100%;
-        }
-
-        @keyframes animatie_submeniu {
-            0% {
-                clip-path: circle(0% at 0 0);
-            }
-
-            100% {
-                clip-path: circle(1000% at 0 0);
-            }
-        }
-
-        .butoaneprincipale::before {
-            display: none;
-        }
-
-        .butoaneprincipale:hover::before {
-            display: none;
-        }
-    }
-
-    /* NAVBAR */
-    .items {
-        display: block;
-        position: absolute;
-        background-color: var(--culoare-principala);
-        list-style: none;
-        margin: 0;
-        top: 100%;
-        text-align: center;
-        width: inherit;
-        transform: scale(0);
-        transform-origin: center;
-        transition: transform 1s ease;
-        opacity: 0;
-    }
-
-    .navbar ul li:hover .items {
-        display: block;
-        width: 100%;
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    .butoaneprincipale {
-        display: block;
-        width: max-content;
-        background-color: var(--culoare-principala);
-        list-style: none;
-        display: inline-block;
-        font-weight: bold;
-        position: relative;
-        padding: 10px;
-        gap: 0;
-        margin: -2px;
-    }
-
-    .butoaneprincipale::before {
-        content: '';
-        position: absolute;
-        box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.3);
-        bottom: 4px;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background-color: rgba(255, 255, 255, 0.7);
-        transform: translateY(-25px);
-        transition: transform 0.8s, opacity 0.8s;
-        opacity: 0;
-    }
-
-    .butoaneprincipale:hover::before {
-        transform: translateY(100%);
-        opacity: 1;
-    }
-
-    .navbar ul li a {
-        text-decoration: none;
-        color: inherit;
-        align-self: center;
-    }
-
-    .navbar ol {
-        list-style: none;
-        position: absolute;
-        left: 0;
-    }
-
-    .navbar ol li:hover {
-        background-color: var(--culoare-hover);
-    }
-
-    #burgermenunavbar {
-        align-content: center;
-        margin: 0;
-        padding-top: 8px;
-    }
-
-    .navbar .items a {
-        font-weight: normal;
-    }
-
-    @media (max-width: 800px) {
-        .items {
-            display: none;
-            z-index: 999;
-        }
-
-        .navbar li {
-            width: 800px;
-            text-align: center;
-            margin: 0px;
-            border: 0px;
-            left: -2px;
-        }
-
-        .butoaneprincipale {
-            width: 800px;
-            padding: 5px 0px 5px 0px;
-            margin: 0;
-            text-align: center;
-        }
-
-        .butoaneprincipale ol {
-            width: 800px;
-        }
-    }
-
     /* MAIN */
 
     main {
@@ -625,7 +377,7 @@
         max-width: fit-content;
         margin: 0;
         padding: 20px;
-        background-color: var(--alb);
+        background-color: var(--culoare-divuri);
         border: 2px solid var(--culoare-borders);
         border-radius: 10px;
         text-align: justify;
@@ -989,7 +741,7 @@ main .linkfrumos:active {
 }
   
   #grid-galerie .empty {
-    background: white;
+    background: var(--culoare-divuri);
   } 
 
   @media (max-width: 1100px) {

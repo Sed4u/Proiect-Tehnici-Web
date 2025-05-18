@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+        <meta name="keywords" content="comandă burgeri online, livrare rapidă fast food, fast food la domiciliu, comenzi non-stop, fast food, restaurant fast food, mâncare rapidă, livrare fast food, comandă online fast food, meniu fast food, mâncare la pachet, oferte fast food"><!--cuvintele cheie ale paginii; majoritatea motoarelor de căutare ignoră keywords -->
+        <meta name="description" content="Restaurant fast food online. Mâncare proaspătă.">
+        <%- include("../fragmente/head") %>     
+        <link href="/resurse/css/produs.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+       <%- include("../fragmente/header") %>  
+    <main>
+        <section>
+            <h2>Pagină produs</h2>
+                <article id="art-produs" class="produs" data-id="<%= prod.id %>" data-nume="<%= prod.nume %>">
+                    <h3><span class="nume"><%- locals.prod.nume %></span></h3>
+                    <p>Pret: <span class="pret"><%- locals.prod.pret %> </span></p>
+                    <p>Descriere: <span class="descriere"><%- locals.prod.descriere %> </span></p>
+                    <p>Ingrediente: <span class="ingrediente"><%- locals.prod.ingrediente %> </span></p>
+                    <p>Calorii: <span class="calorii"><%- locals.prod.calorii %> </span></p>
+                    <p>Gramaj: <span class="gramaj"><%- locals.prod.gramaj %> </span></p>
+                    <p>Tip: <span class="categorie"><%- locals.prod.tip %> </span></p>
+                    <p>Subcategorie: <span class="pt_diabetici"><%- locals.prod.subcategorie %> </span></p>
+                    <p>Data adăugare: <span class="categorie"><%- locals.prod.data_adaugare %> </span></p>
+                    <figure class="imag-produs">
+                        <img  src="/resurse/imagini/produse/<%= locals.prod.tip + '/' + locals.prod.imagine %>" alt="[imagine <%- locals.prod.nume %>]" />
+                    </figure>   
+                    <button 
+                        class="btn btn-outline-primary btn-compare" 
+                        data-id="<%= prod.id %>" 
+                        data-nume="<%= prod.nume %>">
+                        <i class="bi bi-arrow-left-right"></i> Compară
+                    </button>
+
+                </article>
+            
+        </section>
+    </main>
+    <%- include("../fragmente/footer") %>
+    <footer><script type="text/javascript" src=/resurse/js/compara.js></script></footer>
+    </body>
+</html>

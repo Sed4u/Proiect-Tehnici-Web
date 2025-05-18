@@ -1,0 +1,179 @@
+
+body {
+        --culoare-principala: #DEBF62;
+        --culoare-hover: #B3963A;
+        --alb: #FFFFFF;
+        --culoare-borders: #917004;
+        --culoare-secundara: #232e2f;
+        --culoare-footer: #141c1c;
+        --culoare-articol: #a89049;
+        --negru: #000000;
+        overflow-x: hidden;
+    }
+
+
+main{
+    --padd-main:1rem;
+    padding: var(--padd-main);
+}
+
+.grid-produse{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap:1rem;
+}
+.grid-produse .produs{
+    border-radius: 2rem;
+    box-shadow: 0px 0px 0.4rem 0.15rem var(--negru);
+    overflow: hidden;
+}
+
+.grid-produse .produs h3{
+    background-color: var(--culoare-secundara);
+    text-align: center;
+    margin-top: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    box-shadow: 0px 2px 5px var(--negru);
+}
+
+.grid-produse .produs h3 a{
+    color:var(--culoare-principala);
+}
+.grid-produse .produs h3 a:hover{
+    color:var(--culoare-hover);
+}
+
+.gridarticol{
+    display: grid;
+    grid-template-areas: "col1 col2";
+    gap: 0px;
+    padding: 0px;
+}
+
+
+.grid-produse .produs figure{
+    text-align: center;
+}
+.gridarticol .col1 p{
+    text-align: center;
+}
+.grid-produse .produs figure img{
+    border:3px solid var(--negru)
+}
+.grid-produse .produs p>span{
+    padding-left: 5px;
+}
+
+.grid-produse .produs p.tip{
+    padding: 5px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.descriere{
+    padding: 5px;
+}
+
+.info-prod{
+    padding:0.2rem;
+    box-shadow: 0px 0px 0.5rem 0.15rem var(--negru);
+}
+
+.produs{
+    background-color: var(--culoare-articol);
+    position: relative;
+}
+.selecteaza-cos{
+    display: inline-block;
+    background-color: var(--culoare-mov);
+    position:absolute;
+    bottom:0.5rem;
+    right:0.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    padding:0.3rem;
+    border:1px solid transparent;
+}
+
+.selecteaza-cos:hover{
+    background-color: var(--alb);
+    color: var(--negru);
+    border:1px solid  var(--negru);
+}
+
+.nume {
+    color: var(--alb);
+}
+
+.grid-produse figure > a {
+    color: var(--negru);
+}
+
+.carac{
+    color: var(--alb);
+    font-weight: bold;
+}
+
+.carac span,time{
+    color: var(--culoare-footer);
+    font-weight: normal;
+}
+
+.produs {
+    background: linear-gradient(to right, var(--culoare-footer), var(--culoare-articol));
+    color: white;
+}
+
+.col2 {
+    padding-top: 75px ;
+}
+
+/* Customizare dupa bootstrap */
+.container{
+    padding-top: 10px;
+}
+.divfiltre, .divbutoane{
+    background-color: var(--culoare-divuri);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.lnume, .lcalorii, .lpret, .lsubcat, .lselects, .lselectm{
+    padding: 10px;
+}
+
+
+#infoRange{
+    padding-left: 10px;
+}
+
+.divrange{
+    display: flex;
+    align-items: center;
+}
+
+.form-range{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.mention{
+    font-size: 0.7rem;
+    font-style: italic;
+    padding-left: 10px;
+}
+
+#filtrare, #resetare, #sortCrescSubcat, #sortDescrescSubcat, #btn-suma{
+    margin: 5px;
+}
+
+.hproduse{
+    padding: 10px;
+    font-size: 2rem;
+    text-indent: 40px;
+    text-shadow: .5px .5px .5px var(--negru);
+    border: none;
+    margin: 0;
+}

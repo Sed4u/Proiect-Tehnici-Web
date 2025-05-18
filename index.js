@@ -3,6 +3,32 @@ const path= require("path");
 const fs = require("fs");
 const sharp = require("sharp");
 const sass = require("sass");
+const pg = require("pg");
+
+
+
+const Client=pg.Client;
+client=new Client({
+    database:"tehniciweb",
+    user:"dragos",
+    password:"123456",
+    host:"localhost",
+    port:5432
+})
+client.connect()
+client.query("select * from produse", function(err, rezultat ){
+    console.log(err)    
+    console.log("Rezultat query:", rezultat)
+})
+client.query("select * from unnest(enum_range(null::tip_produs))", function(err, rezultat ){
+    console.log(err)    
+    console.log(rezultat)
+})
+client.query("SELECT * FROM unnest(enum_range(NULL::subcategorie_bautura))", function(err, rezultat) {
+    console.log(err)
+    console.log(rezultat)
+});
+
 
 
 app= express();
@@ -23,8 +49,24 @@ obGlobal={
     obImagini:null,
     folderScss: path.join(__dirname,"resurse/scss"),
     folderCss: path.join(__dirname,"resurse/css"),
-    folderBackup: path.join(__dirname,"backup")
+    folderBackup: path.join(__dirname,"backup"),
+    optiuniMeniu:null,
+    optiuniSubcategorie:null
 }
+
+client.query("select * from unnest(enum_range(null::tip_produs))", function(err, rezultat ){
+    console.log(err)    
+    console.log("Tipuri produse:", rezultat)
+    obGlobal.optiuniMeniu = rezultat.rows
+
+})
+
+client.query("SELECT * FROM unnest(enum_range(NULL::subcategorie_bautura))", function(err, rezultat) {
+    console.log(err)
+    console.log("Subcategorii bauturi:", rezultat.rows)
+    obGlobal.optiuniSubcategorie = rezultat.rows
+});
+
 
 
 vect_foldere=["temp", "backup", "temp1"]
@@ -174,6 +216,41 @@ function afisareEroare(res, identificator, titlu, text, imagine){
 }
 
 
+function getProdusById(id) {
+  return new Promise((resolve, reject) => {
+    client.query("SELECT * FROM produse WHERE id=$1", [id], (err, rez) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        resolve(rez.rows[0]);
+      }
+    });
+  });
+}
+
+
+
+app.get('/compara/:id1/:id2', async (req, res) => {
+  const { id1, id2 } = req.params;
+
+  const produs1 = await getProdusById(id1);
+  const produs2 = await getProdusById(id2);
+
+  if (!produs1 || !produs2) {
+    console.log('Produse nu au fost gasite');
+  }
+
+  res.render('pagini/compara', { produse: [produs1, produs2], optiuniMeniu: obGlobal.optiuniMeniu });
+});
+
+
+app.use("/*", function(req, res, next){
+    res.locals.optiuniMeniu=obGlobal.optiuniMeniu
+    res.locals.optiuniSubcategorie = obGlobal.optiuniSubcategorie
+    next();
+} )
+
 
 app.use("/resurse", express.static(path.join(__dirname,"resurse")))
 app.use("/node_modules", express.static(path.join(__dirname,"node_modules")))
@@ -223,6 +300,46 @@ app.get("/abc", function(req, res, next){
 })
 
 
+app.get("/produse", function(req, res){
+    console.log(req.query)
+    var conditieQuery=""; // TO DO where din parametri
+    if (req.query.tip){
+        conditieQuery=` where tip='${req.query.tip}'`
+    }
+    queryOptiuni="select * from unnest(enum_range(null::tip_produs))"
+    client.query(queryOptiuni, function(err, rezOptiuni){
+        console.log(rezOptiuni)
+        queryProduse="select * from produse" + conditieQuery
+        client.query(queryProduse, function(err, rez){
+            if (err){
+                console.log(err);
+                afisareEroare(res, 2);
+            }
+            else{
+                res.render("pagini/produse", {produse: rez.rows, optiuni:rezOptiuni.rows})
+            }
+        })
+    });
+})
+
+
+app.get("/produs/:id", function(req, res){
+    console.log(req.params)
+    client.query(`select * from produse where id=${req.params.id}`, function(err, rez){
+        if (err){
+            console.log(err);
+            afisareEroare(res, 2);
+        }
+        else{
+            if (rez.rowCount==0){
+                afisareEroare(res, 404);
+            }
+            else{
+                res.render("pagini/produs", {prod: rez.rows[0]})
+            }
+        }
+    })
+})
 
 app.get(/^\/resurse\/[a-zA-Z0-9_\/]*$/, function(req, res, next){
     afisareEroare(res,403);

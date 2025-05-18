@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <meta name="keywords" content="comandă burgeri online, livrare rapidă fast food, fast food la domiciliu, comenzi non-stop, fast food, restaurant fast food, mâncare rapidă, livrare fast food, comandă online fast food, meniu fast food, mâncare la pachet, oferte fast food">
+        <meta name="description" content="Restaurant fast food online. Mâncare proaspătă.">
+        <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
+        <title>Golden Bites</title>
+        <%- include("../fragmente/head") %>     
+        <script type="text/javascript" src=/resurse/js/produse.js></script>
+        <script type="text/javascript" src=/resurse/js/produse-cos.js></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    </head>
+    <body>
+        
+        <%- include("../fragmente/header") %>
+
+    <main>
+        <div class="container">
+        <div class="divfiltre">
+            <!-- 1. Input de tip text -->
+            <label class="lnume"> Nume: <input type="text" id="inp-nume" class="form-control"></label>
+            
+            <!-- 4. Grup de inputuri de tip radio (stilizate ca toggle buttons) -->
+            <div> 
+                <p class="lcalorii">Calorii:</p>
+                <div class="containercalorii" style="display: inline-block;">
+                    <input id="i_rad1" class="btn-check" name="gr_rad" value="0:350" type="radio" autocomplete="off"/>
+                    <label class="btn btn-outline-primary" for="i_rad1">Dietetic (calorii &lt; 350)</label>
+
+                    <input id="i_rad2" class="btn-check" name="gr_rad" value="350:700" type="radio" autocomplete="off"/>
+                    <label class="btn btn-outline-primary" for="i_rad2">Mediu (350 &le; calorii &lt; 700)</label>
+                
+                    <input id="i_rad3" class="btn-check" name="gr_rad" value="700:1000000000" type="radio" autocomplete="off"/>
+                    <label class="btn btn-outline-primary" for="i_rad3">Ridicat caloric (700 &le; calorii)</label>
+                
+                    <input id="i_rad4" class="btn-check" checked name="gr_rad" value="toate" type="radio" autocomplete="off"/>
+                    <label class="btn btn-outline-primary" for="i_rad4">Toate</label>
+                </div>
+            </div>
+        
+            <!-- 2. Input de tip range -->
+            <label class="lpret"> Pret minim:
+                <div class="divrange">
+                    <span>0</span>
+                    <input type="range" id="inp-pret" class="form-range" value="0" min="0" max="70">
+                    <span>70</span>
+                    <span id="infoRange">(0)</span> 
+                </div>
+            </label>
+            
+        
+            <!-- 3. Datalist -->
+            <label> Ambalaj: 
+            <input list="ambalaj-list" id="inp-ambalaj" name="ambalaj" class="form-control" />
+            <datalist id="ambalaj-list">
+                <option value="hartie"></option>
+                <option value="carton"></option>
+                <option value="plastic"></option>
+            </datalist>
+            </label>
+
+            <!-- 5. Input de tip checkbox (stilizate ca switch) -->
+            <fieldset>
+                <legend class="lsubcat">Subcategorii bauturi:</legend>
+                <% for (let subcat of locals.optiuniSubcategorie) { %>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="subcategorie" value="<%= subcat.unnest %>" id="subcat_<%= subcat.unnest %>" checked>
+                        <label class="form-check-label" for="subcat_<%= subcat.unnest %>">
+                            <%= subcat.unnest.charAt(0).toUpperCase() + subcat.unnest.slice(1) %>
+                        </label>
+                    </div>
+                <% } %>
+            </fieldset>
+
+            <!-- 6. Textarea cu floating label -->
+            <div class="form-floating mb-3">
+                <textarea id="inp-descriere" class="form-control" rows="3" placeholder="Introdu descriere produs..."></textarea>
+                <label for="inp-descriere">Descriere produs</label>
+            </div>
+            
+            <!-- 8. Select multiplu -->
+            <label>
+                <p class="lselectm">Select multiplu:</p>
+                <p class="mention">* Selectați valorile pe care NU le doriți</p>
+            <select id="inp-multi-ingrediente" class="form-select" multiple size="4">
+                <option value="pui">Pui</option>
+                <option value="vita">Vită</option>
+                <option value="cartofi">Cartofi</option>
+                <option value="branza">Brânză</option>
+                <option value="rosii">Roșii</option>
+                <option value="salata">Salată</option>
+                <option value="ulei">Ulei</option>
+            </select>
+            </label>
+            <br>
+            
+            <!-- 7. Select simplu -->
+            <label class="lselects">Select simplu:
+                <select id="inp-categorie" class="form-select">
+                    <option id="sel-toate" selected value="toate">toate</option>
+                    <% for (let opt of locals.optiuni) { %>
+                        <option value="<%- opt.unnest %>"><%- opt.unnest %> </option>
+                    <% } %>
+                </select>
+            </label>
+        </div>
+
+        <div class="divbutoane" >
+            <!-- Butoane stilizate cu Bootstrap -->
+           <p class="d-flex flex-wrap gap-2">
+            <button id="filtrare" class="btn btn-primary">
+                <i class="bi bi-funnel-fill"></i>
+                <span class="d-none d-md-inline ms-1">Filtreaza</span>
+            </button> 
+
+            <button id="resetare" class="btn btn-secondary">
+                <i class="bi bi-arrow-counterclockwise"></i>
+                <span class="d-none d-md-inline ms-1">Reseteaza</span>
+            </button>
+
+            <button id="sortCrescSubcat" class="btn btn-outline-primary">
+                <i class="bi bi-sort-alpha-down"></i>
+                <span class="d-none d-md-inline ms-1">Sorteaza crescator</span>
+            </button>
+
+            <button id="sortDescrescSubcat" class="btn btn-outline-primary">
+                <i class="bi bi-sort-alpha-up-alt"></i>
+                <span class="d-none d-md-inline ms-1">Sorteaza descrescator</span>
+            </button>
+            
+            <button id="btn-suma" class="btn btn-outline-primary">
+                <i class="bi bi-cash-stack"></i>
+                <span class="d-none d-md-inline ms-1">Total preturi</span>
+            </button>
+            </p>
+
+        </div>
+        </div>
+        <section id="produse">
+
+            <h2 class="hproduse">Produse</h2>
+            <div class="grid-produse">
+                <% for( let prod of locals.produse) { %>
+                    <article class="produs" id="ar_ent_<%= prod.id %>" data-id="<%= prod.id %>" data-nume="<%= prod.nume %>">
+                        <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
+                        <div class="gridarticol">
+                            <div class="col1">
+                                <p class="tip">Categorie:<span class="val-tip"><%- prod.tip%></span></p>
+                                <figure>
+                                    <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/produse/<%= prod.tip + '/' + prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
+                                </figure>
+                                <p class="descriere"><%- prod.descriere %></p>
+                            </div>
+                            <div class="col2">
+                                <p class="carac">Pret: <span class="val-pret"><%- prod.pret%> lei</span></p>
+                                <p class="carac">Ambalaj: <span class="val-ambalaj"><%- prod.ambalaj%></span></p>
+                                <p class="carac">Ingrediente: <span class="ingrediente"><%- prod.ingrediente%></span></p>
+                                <% if (prod.subcategorie) { %>
+                                    <p class="carac">Subcategorie: <span class="val-subcategorie"><%- prod.subcategorie %></span></p>
+                                <% } %>
+                                <p class="carac" style="display: inline-block;">Data adaugare: </p>
+                                <% 
+                                function formatData(dataSql) {
+                                    if (!dataSql) return "";
+                                    const luni = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
+                                    const zile = ["Duminica", "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
+                                    const d = new Date(dataSql);
+                                    const zi = String(d.getDate()).padStart(2, '0');
+                                    const luna = luni[d.getMonth()];
+                                    const an = d.getFullYear();
+                                    const ziSaptamana = zile[d.getDay()];
+                                    return `${zi}-${luna}-${an} [${ziSaptamana}]`;
+                                }
+                                %>
+                                <time datetime="<%- prod.data_adaugare %>"><%= formatData(prod.data_adaugare) %></time>
+                                <p class="carac">Calorii: <span class="val-calorii"><%- prod.calorii %> kcal</span></p>
+                                <p class="carac">Disponibilitate: <span class="disponibil"><%= prod.disponibil ? "disponibil" : "indisponibil" %></span></p>
+                                <label class="selecteaza-cos">
+                                    Selectează:<br/>
+                                    <input type="checkbox" class="select-cos form-check-input" value="<%-prod.id %>" autocomplete="off">
+                                </label>
+
+                                <button class="btn btn-outline-primary btn-compare">Compară</button>
+                            </div>
+                        </div>
+                    </article>
+                <% }%>
+            </div>
+        </section>
+    </main>
+    
+    <%- include("../fragmente/footer") %>
+    <footer><script type="text/javascript" src=/resurse/js/compara.js></script></footer>
+    </body>
+</html>

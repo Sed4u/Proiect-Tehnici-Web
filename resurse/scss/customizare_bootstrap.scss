@@ -1,53 +1,95 @@
-@use '../../node_modules/bootstrap/scss/bootstrap' as bootstrap with (
-  $primary: #DEBF62,
-  $secondary: #232e2f,
-  $font-family-base: 'Times New Roman',
-  $font-size-base: 1rem,
-  $line-height-base: 1,
-  $border-radius: 1rem,
-  $border-radius-lg: 1.5rem,
-  $border-radius-sm: 0.75rem,
-  $btn-font-weight: 600,
-  $spacer: 2rem
+
+$primary: #DEBF62;
+$secondary: #232e2f;
+$btn-border-radius: 0.5rem;
+$btn-border-width: 2px;
+$range-thumb-size: 1.5rem;
+$form-floating-height: 4rem;
+$form-floating-padding-y: 1.5rem;
+$font-family-base: "Times New Roman", Times, serif; 
+
+
+@use '../../node_modules/bootstrap/scss/bootstrap' with (
+  $primary: $primary,
+  $secondary: $secondary,
+  $font-family-base: $font-family-base,
+  $border-radius: $btn-border-radius,
+  $btn-border-width: $btn-border-width,
+  $form-range-thumb-width: $range-thumb-size,
+  $form-range-thumb-height: $range-thumb-size,
+  $form-range-thumb-bg: $primary,
+  $form-range-track-bg: rgba($primary, 0.3)
 );
 
-h1 {
-  font-size: 3rem !important;
-}
-h2 {
-  font-size: 2rem !important;
-}
-h3 {
-  font-size: 1rem !important;
-}
-
-.theme-light {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-.theme-dark {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
-
-.btn-custom-text {
-  background-color: #fff;
-  color: #000000;
-  border: 1px solid #917004;
-}
-
-.responsive-box {
-  padding: 1rem;
-  font-size: 1rem;
-
-  @include bootstrap.media-breakpoint-up(md) {
-    padding: 2rem;
-    font-size: 1.25rem;
+.btn-icon-sm {
+  .btn-text {
+    display: none;
   }
+  
+  @include bootstrap.media-breakpoint-up(md) {
+    .btn-text {
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
+  }
+}
 
-  @include bootstrap.media-breakpoint-up(lg) {
-    padding: 3rem;
-    font-size: 1.5rem;
+
+.form-floating {
+  min-height: $form-floating-height;
+  padding-top: $form-floating-padding-y;
+  
+  > .form-control.is-invalid ~ label {
+    color: bootstrap.$danger;
+  }
+}
+
+
+.btn-group-toggle {
+  .btn {
+    @extend .btn-outline-primary;
+    
+    &.active {
+      @extend .btn-primary;
+      font-weight: bootstrap.$font-weight-bold;
+    }
+  }
+}
+
+
+.theme-switch {
+  @extend .form-switch;
+  @extend .form-check-reverse;
+  
+  .form-check-input {
+    width: 3rem;
+    height: 1.5rem;
+    
+    &:checked {
+      background-color: $primary;
+      border-color: darken($primary, 10%);
+    }
+  }
+  
+  .bi {
+    font-size: 1.25rem;
+    margin: 0 0.5rem;
+  }
+}
+
+
+.filter-grid {
+  @extend .row;
+  @extend .g-3;
+  @extend .mb-4;
+  
+  > * {
+    @extend .col-12;
+    @extend .col-md-6;
+    @extend .col-lg-3;
+  }
+  
+  .full-width {
+    @extend .col-12;
   }
 }

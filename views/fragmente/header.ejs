@@ -6,6 +6,10 @@
             <area shape="rect" coords="0,0,100,100" href="/" alt="[Logo]">
         </map>
         <h1 class="titlusite">Golden Bites</h1>
+        <button id="theme-toggle" class="theme-toggle">
+            <i class="fa-solid fa-sun"></i>
+        </button>
+
     </div>
     <div id="burgermenunavbar">
         <input type="checkbox" id="burger-toggle">
@@ -23,10 +27,13 @@
                 <li class="butoaneprincipale">
                     <a href="/produse">Produse proaspete</a>
                     <ol class="items">
-                        <li><a href="/pui">Produse din pui</a></li>
+                        <!-- <li><a href="/pui">Produse din pui</a></li>
                         <li><a href="/vita">Produse din vita</a></li>
                         <li><a href="/garnituri">Garnituri</a></li>
-                        <li><a href="/deserturi">Deserturi</a></li>
+                        <li><a href="/deserturi">Deserturi</a></li> -->
+                        <% for (let opt of locals.optiuniMeniu) { %>
+                        <li><a href="/produse?tip=<%= opt.unnest %>"><%= opt.unnest %></a></li>
+                        <% }  %>
                     </ol>
                 </li>
                 <li class="butoaneprincipale">
@@ -37,18 +44,10 @@
                         </ol>
                 </li>
                 <li class="butoaneprincipale">
-                    <a href="/bauturi">Bauturi</a>
-                    <ol class="items">
-                        <li><a href="/racoritoare">Bauturi racoritoare</a></li>
-                        <li><a href="/cafea">Cafea</a></li>
-                        <li><a href="/shakeuri">Shakeuri</a></li>
-                    </ol>
-                </li>
-                <li class="butoaneprincipale">
                     <a href="/despre">Despre</a>
                 </li>
             </ul>
         </nav>
     </div>
-    
+    <script src="/resurse/js/theme.js" type="text/javascript"></script>
 </header>
