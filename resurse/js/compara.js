@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const wrapper = document.createElement("div");
                 wrapper.className = "d-flex align-items-center justify-content-between mb-2";
 
+
                 const nume = document.createElement("span");
                 nume.textContent = prod.nume;
 

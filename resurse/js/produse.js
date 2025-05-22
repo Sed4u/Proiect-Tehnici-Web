@@ -96,6 +96,7 @@ window.onload= function(){
                 prod.style.display="block";
             }
         }
+        actualizeazaNumarProduse();
 
     }
 
@@ -132,6 +133,7 @@ window.onload= function(){
         for (let prod of produse){
             prod.style.display="block";
         }
+        actualizeazaNumarProduse();
     }
 
     document.getElementById("sortCrescSubcat").onclick = function() {
@@ -142,6 +144,12 @@ window.onload= function(){
         if (!validareInputuri()) return;
         sorteazaSubcat(-1);
     }
+
+    function actualizeazaNumarProduse() {
+    let produse = document.getElementsByClassName("produs");
+    let nrVizibile = Array.from(produse).filter(p => p.style.display !== "none").length;
+    document.getElementById("nr-produse").textContent = `Produse afisate: ${nrVizibile}`;
+}
 
 
     function sorteazaSubcat(semn){

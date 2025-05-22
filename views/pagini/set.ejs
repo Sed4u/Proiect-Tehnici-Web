@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+        <meta name="keywords" content="comandă burgeri online, livrare rapidă fast food, fast food la domiciliu, comenzi non-stop, fast food, restaurant fast food, mâncare rapidă, livrare fast food, comandă online fast food, meniu fast food, mâncare la pachet, oferte fast food"><!--cuvintele cheie ale paginii; majoritatea motoarelor de căutare ignoră keywords -->
+        <meta name="description" content="Restaurant fast food online. Mâncare proaspătă.">
+        <%- include("../fragmente/head") %>     
+        <link href="/resurse/css/set.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+       <%- include("../fragmente/header") %>  
+    <main>
+        <section>
+            <h2>Pagină set</h2>
+                <article id="art-set" class="set" data-id="<%= set.id %>" data-nume="<%= set.nume_set %>">
+                    <h3><span class="nume"><%- locals.set.nume_set %></span></h3>
+                    <p>Pret: <span class="pret"><%= set.pret %> lei</span></p>
+                    <p>Descriere: <span class="descriere"><%- locals.set.descriere_set %> </span></p>
+                    <% 
+                        let totalCalorii = 0;
+                        set.produse.forEach(p => { 
+                            totalCalorii += p.calorii || 0; 
+                        }); 
+                    %>
+                    <p>Calorii: <span class="calorii"><%= totalCalorii %> kcal</span></p>
+                     <p class="contine">Contine: 
+                        <% set.produse.forEach((produs, index) => { %>
+                            <a href="/produs/<%= produs.id %>"><%= produs.nume %></a><%= index < set.produse.length - 1 ? ', ' : '' %>
+                        <% }) %>
+                    </p>
+                    <figure class="imag-set">
+                        <a href="/set/<%-set.id %>" ><img  src="/resurse/imagini/seturi/<%- set.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- set.nume_set %>]" /></a>
+                    </figure> 
+                </article>
+            
+        </section>
+    </main>
+    <%- include("../fragmente/footer") %>
+    <footer><script type="text/javascript" src=/resurse/js/compara.js></script></footer>
+    </body>
+</html>

@@ -19,11 +19,48 @@
                     <p>Calorii: <span class="calorii"><%- locals.prod.calorii %> </span></p>
                     <p>Gramaj: <span class="gramaj"><%- locals.prod.gramaj %> </span></p>
                     <p>Tip: <span class="categorie"><%- locals.prod.tip %> </span></p>
-                    <p>Subcategorie: <span class="pt_diabetici"><%- locals.prod.subcategorie %> </span></p>
-                    <p>Data adăugare: <span class="categorie"><%- locals.prod.data_adaugare %> </span></p>
+                    <% if (prod.subcategorie) { %>
+                        <p class="carac">Subcategorie: <span class="val-subcategorie"><%- locals.prod.subcategorie %></span></p>
+                    <% } %>
+                    <p class="carac" style="display: inline-block;">Data adaugare: </p>
+                    <% 
+                    function formatData(dataSql) {
+                        if (!dataSql) return "";
+                        const luni = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
+                        const zile = ["Duminica", "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
+                        const d = new Date(dataSql);
+                        const zi = String(d.getDate()).padStart(2, '0');
+                        const luna = luni[d.getMonth()];
+                        const an = d.getFullYear();
+                        const ziSaptamana = zile[d.getDay()];
+                        return `${zi}-${luna}-${an} [${ziSaptamana}]`;
+                    }
+                    %>
+                    <time datetime="<%- prod.data_adaugare %>"><%= formatData(prod.data_adaugare) %></time>
                     <figure class="imag-produs">
                         <img  src="/resurse/imagini/produse/<%= locals.prod.tip + '/' + locals.prod.imagine %>" alt="[imagine <%- locals.prod.nume %>]" />
-                    </figure>   
+                    </figure>
+                    <% if (locals.seturi.length > 0) { %>
+                    <section class="seturi-din-care-face-parte">
+                        <h3>Acest produs face parte din următoarele seturi:</h3>
+                        <div class="lista-seturi">
+                        <% for (let set of locals.seturi) { %>
+                            <article class="set">
+                                <h4>
+                                    <a href="/set/<%= set.id %>"><%= set.nume_set %></a> -
+                                    <span class="pret-set"><%= set.pret %> lei</span>
+                                </h4>
+                                <p>Conține:
+                                    <% set.produse.forEach((produs, index) => { %>
+                                        <a href="/produs/<%= produs.id %>"><%= produs.nume %></a><%= index < set.produse.length - 1 ? ", " : "" %>
+                                    <% }) %>
+                                </p>
+                            </article>
+                        <% } %>
+                        </div>
+                    </section>
+                    <% } %>
+
                     <button 
                         class="btn btn-outline-primary btn-compare" 
                         data-id="<%= prod.id %>" 
@@ -32,10 +69,36 @@
                     </button>
 
                 </article>
+
+                <% if (locals.similare && similare.length > 0) { %>
+                <div class="produse-similare mt-5">
+                    <h3>Produse similare</h3>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+                        <% similare.forEach(p => { %>
+                            <div class="col">
+                                <div class="card h-100 shadow-lg" style="background-color: var(--culoare-divuri);">
+                                    <img src="/resurse/imagini/produse/<%= p.tip + '/' + p.imagine %>" class="card-img-top" alt="<%= p.nume %>">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: var(--culoare-font);"><%= p.nume %></h5>
+                                        <p class="card-text" style="color: var(--culoare-font);"><strong><%= p.pret %> lei</strong></p>
+                                        <a href="/produs/<%= p.id %>" class="btn btn-outline-primary btn-sm" style="margin-top: 10px;">Vezi produs</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+                <% } %>
+
             
         </section>
     </main>
     <%- include("../fragmente/footer") %>
-    <footer><script type="text/javascript" src=/resurse/js/compara.js></script></footer>
+    <footer><script type="text/javascript" src=/resurse/js/compara.js></script>
+    <style>
+            #container-comparatie{
+                background-color: var(--culoare-divuri) !important;
+            }
+        </style></footer>
     </body>
 </html>

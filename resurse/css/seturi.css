@@ -17,18 +17,19 @@ main{
     padding: var(--padd-main);
 }
 
-.grid-produse{
+.grid-seturi{
     display:grid;
     grid-template-columns: 1fr 1fr;
     grid-gap:1rem;
 }
-.grid-produse .produs{
+.grid-seturi .set{
     border-radius: 2rem;
     box-shadow: 0px 0px 0.4rem 0.15rem var(--negru);
     overflow: hidden;
+    text-align: center;
 }
 
-.grid-produse .produs h3{
+.grid-seturi .set h3{
     background-color: var(--culoare-secundara);
     text-align: center;
     margin-top: 0;
@@ -37,35 +38,33 @@ main{
     box-shadow: 0px 2px 5px var(--negru);
 }
 
-.grid-produse .produs h3 a{
-    color: #DEBF62;
+.grid-seturi .set h3 a{
+    color:var(--culoare-principala);
 }
-.grid-produse .produs h3 a:hover{
-    color:#B3963A;
-}
-
-.gridarticol{
-    display: grid;
-    grid-template-areas: "col1 col2";
-    gap: 0px;
-    padding: 0px;
+.grid-seturi .set h3 a:hover{
+    color:var(--culoare-hover);
 }
 
 
-.grid-produse .produs figure{
+.grid-seturi .set figure{
     text-align: center;
 }
 .gridarticol .col1 p{
     text-align: center;
 }
-.grid-produse .produs figure img{
-    border:3px solid var(--negru)
+.grid-seturi .set figure img{
+    border:3px solid var(--negru);
 }
-.grid-produse .produs p>span{
+
+.grid-seturi .set figure{
+    padding: 20px 20px 0px 20px ;
+}
+
+.grid-seturi .set p>span{
     padding-left: 5px;
 }
 
-.grid-produse .produs p.tip{
+.grid-seturi .set p.tip{
     padding: 5px;
     text-align:center;
     font-weight:bold;
@@ -73,14 +72,15 @@ main{
 
 .descriere{
     padding: 5px;
+    margin-bottom: 20px;
 }
 
-.info-prod{
-    padding:0.2rem;
-    box-shadow: 0px 0px 0.5rem 0.15rem var(--negru);
+.contine{
+    padding: 5px;
 }
 
-.produs{
+
+.set{
     background-color: var(--culoare-articol);
     position: relative;
 }
@@ -106,87 +106,17 @@ main{
     color: var(--alb);
 }
 
-.grid-produse figure > a {
-    color: var(--negru);
-}
 
-.carac{
-    color: var(--alb);
-    font-weight: bold;
-}
-
-.carac span,time{
-    color: var(--culoare-footer);
-    font-weight: normal;
-}
-
-.produs {
+.set {
     background: linear-gradient(to right, var(--culoare-footer), var(--culoare-articol));
     color: white;
 }
 
-.col2 {
-    padding-top: 75px ;
-}
-
-/* Customizare dupa bootstrap */
-.container{
-    padding-top: 10px;
-}
-.divfiltre, .divbutoane{
-    background-color: var(--culoare-divuri);
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 20px;
-}
-
-.lnume, .lcalorii, .lpret, .lsubcat, .lselects, .lselectm{
-    padding: 10px;
-}
-
-
-#infoRange{
-    padding-left: 10px;
-}
-
-.divrange{
-    display: flex;
-    align-items: center;
-}
-
-.form-range{
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.mention{
-    font-size: 0.7rem;
-    font-style: italic;
-    padding-left: 10px;
-}
-
-#filtrare, #resetare, #sortCrescSubcat, #sortDescrescSubcat, #btn-suma{
-    margin: 5px;
-}
-
-.hproduse{
+.hseturi{
     padding: 10px;
     font-size: 2rem;
     text-indent: 40px;
     text-shadow: .5px .5px .5px var(--negru);
     border: none;
     margin: 0;
-}
-
-.numarproduse{
-    padding: 20px;
-    font-size: 1.2rem;
-    text-indent: 40px;
-    text-shadow: .5px .5px .5px var(--negru);
-    border: none;
-    margin: 0;
-}
-
-.cel-mai-ieftin{
-    color: red;
 }

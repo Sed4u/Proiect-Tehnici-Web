@@ -300,46 +300,285 @@ app.get("/abc", function(req, res, next){
 })
 
 
-app.get("/produse", function(req, res){
-    console.log(req.query)
-    var conditieQuery=""; // TO DO where din parametri
-    if (req.query.tip){
-        conditieQuery=` where tip='${req.query.tip}'`
+app.get("/produse", function(req, res) {
+    console.log(req.query);
+    let conditieQuery = "";
+    if (req.query.tip) {
+        conditieQuery = ` WHERE tip = $1`;
     }
-    queryOptiuni="select * from unnest(enum_range(null::tip_produs))"
-    client.query(queryOptiuni, function(err, rezOptiuni){
-        console.log(rezOptiuni)
-        queryProduse="select * from produse" + conditieQuery
-        client.query(queryProduse, function(err, rez){
-            if (err){
-                console.log(err);
-                afisareEroare(res, 2);
-            }
-            else{
-                res.render("pagini/produse", {produse: rez.rows, optiuni:rezOptiuni.rows})
-            }
-        })
+
+    const queryOptiuni = "SELECT * FROM unnest(enum_range(null::tip_produs))";
+    const queryMinime = "SELECT tip, MIN(pret) as min_pret FROM produse GROUP BY tip";
+
+    client.query(queryOptiuni, function(errOpt, rezOptiuni) {
+        if (errOpt) {
+            console.log(errOpt);
+            afisareEroare(res, 2);
+        } else {
+            client.query(queryMinime, function(errMin, rezMinime) {
+                if (errMin) {
+                    console.log(errMin);
+                    afisareEroare(res, 2);
+                } else {
+                    const minPretPeCategorie = {};
+                    rezMinime.rows.forEach(row => {
+                        minPretPeCategorie[row.tip] = parseFloat(row.min_pret);
+                    });
+
+                    const queryProduse = "SELECT * FROM produse" + conditieQuery;
+                    const params = req.query.tip ? [req.query.tip] : [];
+
+                    client.query(queryProduse, params, function(errProd, rezProd) {
+                        if (errProd) {
+                            console.log(errProd);
+                            afisareEroare(res, 2);
+                        } else {
+                            const produse = rezProd.rows;
+                            res.render("pagini/produse", {
+                                produse: produse,
+                                optiuni: rezOptiuni.rows,
+                                minPretPeCategorie: minPretPeCategorie
+                            });
+                        }
+                    });
+                }
+            });
+        }
     });
-})
+});
+
 
 
 app.get("/produs/:id", function(req, res){
-    console.log(req.params)
-    client.query(`select * from produse where id=${req.params.id}`, function(err, rez){
-        if (err){
-            console.log(err);
-            afisareEroare(res, 2);
+    const idProdus = req.params.id;
+
+    const queryProdus = `SELECT * FROM produse WHERE id=$1`;
+    const querySeturi = `
+        SELECT s.id, s.nume_set, s.descriere_set, s.imagine,
+               p2.id AS produs_id, p2.nume AS produs_nume, p2.pret AS produs_pret
+        FROM asociere_set a1
+        INNER JOIN seturi s ON a1.id_set = s.id
+        LEFT JOIN asociere_set a2 ON s.id = a2.id_set
+        LEFT JOIN produse p2 ON a2.id_produs = p2.id
+        WHERE a1.id_produs = $1
+        ORDER BY s.id
+    `;
+
+    const querySimilare = `
+    SELECT id, nume, imagine, pret, tip
+    FROM produse
+    WHERE tip = $1 AND id != $2
+    LIMIT 4
+    `;
+
+    client.query(queryProdus, [idProdus], function(err1, rezProd){
+        if (err1 || rezProd.rowCount == 0){
+            console.log(err1);
+            afisareEroare(res, 404);
+        }   
+        else {
+            const produs = rezProd.rows[0];
+
+            client.query(querySimilare, [produs.tip, idProdus], function(err3, rezSimilare){
+                if (err3){
+                    console.log(err3);
+                    afisareEroare(res, 3);
+                    return;
+                }
+
+                const produseSimilare = rezSimilare.rows;
+
+                client.query(querySeturi, [idProdus], function(err2, rezSeturi){
+                    if (err2){
+                        console.log(err2);
+                        afisareEroare(res, 2);
+                    }
+                    else {
+                        const seturi = [];
+                        let curSet = null;
+                        let lastSetId = null;
+
+                        for (let row of rezSeturi.rows) {
+                            if (row.id !== lastSetId) {
+                                if (curSet) {
+                                    const n = curSet.produse.length;
+                                    const reducere = Math.min(5, n) * 0.05;
+                                    curSet.pret = (curSet.totalPret * (1 - reducere)).toFixed(2);
+                                    delete curSet.totalPret;
+                                    seturi.push(curSet);
+                                }
+
+                                curSet = {
+                                    id: row.id,
+                                    nume_set: row.nume_set,
+                                    descriere_set: row.descriere_set,
+                                    imagine: row.imagine,
+                                    produse: [],
+                                    totalPret: 0
+                                };
+                                lastSetId = row.id;
+                            }
+
+                            if (row.produs_id) {
+                                const pret = parseFloat(row.produs_pret) || 0;
+                                curSet.produse.push({
+                                    id: row.produs_id,
+                                    nume: row.produs_nume,
+                                    pret: pret
+                                });
+                                curSet.totalPret += pret;
+                            }
+                        }
+
+                        if (curSet) {
+                            const n = curSet.produse.length;
+                            const reducere = Math.min(5, n) * 0.05;
+                            curSet.pret = (curSet.totalPret * (1 - reducere)).toFixed(2);
+                            delete curSet.totalPret;
+                            seturi.push(curSet);
+                        }
+
+                        res.render("pagini/produs", {
+                            prod: produs,
+                            seturi: seturi,
+                            similare: produseSimilare
+                        });
+                    }
+                });
+            });
         }
-        else{
-            if (rez.rowCount==0){
-                afisareEroare(res, 404);
-            }
-            else{
-                res.render("pagini/produs", {prod: rez.rows[0]})
-            }
+    });
+});
+
+
+app.get("/seturi", function(req, res) {
+  const query = `
+    SELECT 
+      s.id AS set_id, s.nume_set, s.descriere_set, s.imagine,
+      p.id AS produs_id, p.nume AS produs_nume,
+      p.pret AS produs_pret
+    FROM seturi s
+    LEFT JOIN asociere_set a ON s.id = a.id_set
+    LEFT JOIN produse p ON a.id_produs = p.id
+    ORDER BY s.id
+  `;
+
+  client.query(query, [], function(err, rez) {
+    if (err) {
+      console.error(err);
+      afisareEroare(res, 2);
+    } else {
+      const seturi = [];
+      let curSet = null;
+      let lastSetId = null;
+
+      rez.rows.forEach(row => {
+        if (row.set_id !== lastSetId) {
+          if (curSet) {
+            const n = curSet.produse.length;
+            const reducere = Math.min(5, n) * 0.05;
+            curSet.pret = (curSet.totalPret * (1 - reducere)).toFixed(2);
+            delete curSet.totalPret;
+            seturi.push(curSet);
+          }
+
+          curSet = {
+            id: row.set_id,
+            nume_set: row.nume_set,
+            descriere_set: row.descriere_set,
+            imagine: row.imagine,
+            produse: [],
+            totalPret: 0
+          };
+          lastSetId = row.set_id;
         }
-    })
-})
+
+        if (row.produs_id) {
+          const pret = parseFloat(row.produs_pret) || 0;
+          curSet.produse.push({
+            id: row.produs_id,
+            nume: row.produs_nume,
+            pret: pret
+          });
+          curSet.totalPret += pret;
+        }
+      });
+
+      if (curSet) {
+        const n = curSet.produse.length;
+        const reducere = Math.min(5, n) * 0.05;
+        curSet.pret = (curSet.totalPret * (1 - reducere)).toFixed(2);
+        delete curSet.totalPret;
+        seturi.push(curSet);
+      }
+
+      res.render("pagini/seturi", { seturi: seturi });
+    }
+  });
+});
+
+
+app.get("/set/:id", function(req, res) {
+  const idSet = req.params.id;
+
+  const query = `
+    SELECT 
+      s.id, s.nume_set, s.descriere_set, s.imagine,
+      p.id AS produs_id, p.nume AS produs_nume, p.pret AS produs_pret, p.calorii AS produs_calorii
+    FROM seturi s
+    LEFT JOIN asociere_set a ON s.id = a.id_set
+    LEFT JOIN produse p ON a.id_produs = p.id
+    WHERE s.id = $1
+  `;
+
+  client.query(query, [idSet], function(err, rez) {
+    if (err) {
+      console.error(err);
+      afisareEroare(res, 2);
+    } else {
+      if (rez.rowCount === 0) {
+        afisareEroare(res, 404);
+      } else {
+        const set = {
+          id: rez.rows[0].id,
+          nume_set: rez.rows[0].nume_set,
+          descriere_set: rez.rows[0].descriere_set,
+          imagine: rez.rows[0].imagine,
+          produse: []
+        };
+
+        let totalPret = 0;
+
+        rez.rows.forEach(row => {
+        if (row.produs_id) {
+            const pretProdus = parseFloat(row.produs_pret) || 0;
+            const caloriiProdus = parseFloat(row.produs_calorii) || 0;
+
+            const produs = {
+            id: row.produs_id,
+            nume: row.produs_nume,
+            pret: pretProdus,
+            calorii: caloriiProdus
+            };
+
+            totalPret += pretProdus;
+            set.produse.push(produs);
+        }
+        });
+
+
+        const n = set.produse.length;
+        const reducere = Math.min(5, n) * 0.05;
+        set.pret = (totalPret * (1 - reducere)).toFixed(2);
+
+        res.render("pagini/set", { set: set });
+      }
+    }
+  });
+});
+
+
+
 
 app.get(/^\/resurse\/[a-zA-Z0-9_\/]*$/, function(req, res, next){
     afisareEroare(res,403);

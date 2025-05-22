@@ -238,7 +238,7 @@
             width: 100%;
             flex-direction: column;
             position: absolute;
-            margin-top: -26px;
+            margin-top: -14px;
             margin-left: -385px;
             top: 100%;
             background-color: var(--culoare-principala);
@@ -261,7 +261,7 @@
             }
 
             100% {
-                clip-path: circle(1000% at 0 0);
+                clip-path: circle(1500% at 0 0);
             }
         }
 
@@ -518,9 +518,10 @@ body {
     --culoare-secundara: #232e2f;
     --culoare-footer: #141c1c;
     --negru: #000000;
+    --culoare-font: black;
     
     background-color: var(--culoare-principala);
-    color: var(--negru);
+    color: var(--culoare-font) !important;
     overflow-x: hidden;
 
     transition: all 0.5s ease;
@@ -537,9 +538,10 @@ body {
     --culoare-secundara: #0f1617;    
     --culoare-footer: #0a1010;
     --negru: #000000;
+    --culoare-font: white;
 
     background-color: var(--culoare-principala);
-    color: var(--alb);
+    color: var(--culoare-font) !important;
     
 }
 

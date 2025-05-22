@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <meta name="keywords" content="comandă burgeri online, livrare rapidă fast food, fast food la domiciliu, comenzi non-stop, fast food, restaurant fast food, mâncare rapidă, livrare fast food, comandă online fast food, meniu fast food, mâncare la pachet, oferte fast food">
+        <meta name="description" content="Restaurant fast food online. Mâncare proaspătă.">
+        <link rel="stylesheet" href="/resurse/css/seturi.css" type="text/css" />
+        <title>Golden Bites</title>
+        <%- include("../fragmente/head") %>     
+        <script type="text/javascript" src=/resurse/js/seturi.js></script>
+        <script type="text/javascript" src=/resurse/js/seturi-cos.js></script>
+    </head>
+    <body>
+        
+        <%- include("../fragmente/header") %>
+
+    <main>
+        <section id="seturi">
+            <h2 class="hseturi">Seturi</h2>
+            <div class="grid-seturi">
+                <% for( let set of locals.seturi) { %>
+                    <article class="set" id=<%= set.id %>>
+                        <h3 class="nume">Nume: <a href="/set/<%-set.id %>" style="color: #DEBF62;"><span><%- set.nume_set%></span></a></h3>
+                            <figure>
+                                <a href="/set/<%-set.id %>" ><img src="/resurse/imagini/seturi/<%- set.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- set.nume_set %>]" /></a>
+                            </figure>
+                            <p class="descriere"><%- set.descriere_set %></p>
+                            <p class="contine">Conține: 
+                            <% set.produse.forEach((produs, index) => { %>
+                                <a href="/produs/<%= produs.id %>"><%= produs.nume %></a><%= index < set.produse.length - 1 ? ', ' : '' %>
+                            <% }) %>
+                            </p>
+                            <p>Pret: <span class="pret"><%= set.pret %> lei</span></p>
+                            <label class="selecteaza-cos">
+                                    Selectează:<br/>
+                                    <input type="checkbox" class="select-cos form-check-input" value="<%-set.id %>" autocomplete="off">
+                            </label>
+                    </article>
+                <% }%>
+            </div>
+        </section>
+    </main>
+    <%- include("../fragmente/footer") %>
+    </body>
+</html>

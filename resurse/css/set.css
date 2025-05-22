@@ -1,7 +1,7 @@
 h2{
     padding:0.4rem;
 }
-#art-produs{
+#art-set{
     margin:0 auto;
     width:70%;
     max-width:700px;
@@ -10,38 +10,28 @@ h2{
     padding:0.4rem;
 }
 
-#art-produs p{
+#art-set p{
     margin:0;
     padding:0.4rem;
     font-weight:bold;
     font-size:1.1rem;
 }
 
-#art-produs p span{
+#art-set p span{
     font-weight: normal;
 }
-#art-produs p:nth-of-type(even){
-    background-color: var(--culoare-roz-inchis);
-}
-#art-produs p:nth-of-type(odd){
-    background-color: var(--cl-marcare);
-}
-.imag-produs{
+.imag-set{
     text-align: center;
 }
-.imag-produs img{
+.imag-set img{
     width:50%;
     height:auto;
 }
 section {
     margin-bottom: 300px;
 }
-
-.seturi-din-care-face-parte{
-    margin: 0px;
-}
 @media screen and (max-width: 700px){
-    #art-produs{
+    #art-set{
         margin:0 auto;
         width:95%;
     }
